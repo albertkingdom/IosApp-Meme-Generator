@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="Image" representedClassName="Image" syncable="YES" codeGenerationType="class">
+        <attribute name="editedImg" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="img" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="text" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageText" inverseName="image" inverseEntity="ImageText"/>
+    </entity>
+    <entity name="ImageText" representedClassName="ImageText" syncable="YES" codeGenerationType="class">
+        <attribute name="attributedText" optional="YES" attributeType="Transformable" customClassName="NSAttributedString"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="text" inverseEntity="Image"/>
+    </entity>
+    <elements>
+        <element name="Image" positionX="-27" positionY="18" width="128" height="74"/>
+        <element name="ImageText" positionX="18" positionY="81" width="128" height="59"/>
+    </elements>
 </model>
