@@ -9,8 +9,7 @@ import UIKit
 import CoreData
 
 class SentMemeCollectionViewController: UICollectionViewController{
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    //var memes: [Meme]!
+
     var memeImage = [Image]()
     var dataController: DataController! = (UIApplication.shared.delegate as! AppDelegate).dataController
     
@@ -18,16 +17,10 @@ class SentMemeCollectionViewController: UICollectionViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // add right button
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(navigateToMemeEditor))
         navigationItem.leftBarButtonItem = editButtonItem
-        // setting flow layout
-        //let space:CGFloat = 0.5
-        //let dimension = (view.frame.size.width - (2 * space)) / 3.0
 
-//        flowLayout.minimumInteritemSpacing = space
-//        flowLayout.minimumLineSpacing = space
-//        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
         
         
         
@@ -49,25 +42,20 @@ class SentMemeCollectionViewController: UICollectionViewController{
     
     @objc func navigateToMemeEditor() {
         
-            let createMemeController = self.storyboard!.instantiateViewController(withIdentifier: "CreateMemeController") as! ViewController
-            //navigationController.pushViewController(createMemeController, animated: true)
+        let createMemeController = self.storyboard!.instantiateViewController(withIdentifier: "CreateMemeController") as! ViewController
         
-            createMemeController.dataController = dataController
+        createMemeController.dataController = dataController
        
-            //present(createMemeController, animated: true, completion: nil)
         navigationController?.pushViewController(createMemeController, animated: true)
     }
     
     @objc func deleteItem() {
         let selectItems = collectionView.indexPathsForSelectedItems!
-        print("selectItem \(selectItems)")
-        
-   
-        
+ 
         for item in selectItems {
-            
-            dataController.viewContext.delete(memeImage[item[1]])
-            memeImage.remove(at: item[1])
+
+            dataController.viewContext.delete(image(for: item))
+            memeImage.remove(at: item.row)
         }
         do {
             try dataController.viewContext.save()
@@ -79,11 +67,10 @@ class SentMemeCollectionViewController: UICollectionViewController{
         } catch {
             print("\(error.localizedDescription)")
         }
-       
-        //dataController.viewContext.deletedObjects
+
     }
     override func viewWillAppear(_ animated: Bool) {
-        //memes = appDelegate.memes
+
         loadImage()
         collectionView.reloadData()
        
@@ -96,12 +83,10 @@ class SentMemeCollectionViewController: UICollectionViewController{
     // to create a collection veiw cell with identifier=xxx
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-       // let meme = memeImage[indexPath.row]
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
-        
-//        cell.memeTopText.text = meme.topText
-//        cell.memeBottomText.text = meme.bottomText
-        cell.memeImageView.image = UIImage(data: memeImage[indexPath.row].editedImg!)
+
+        cell.memeImageView.image = UIImage(data: image(for: indexPath).editedImg!)
         
         return cell
     }
@@ -114,40 +99,27 @@ class SentMemeCollectionViewController: UICollectionViewController{
         //detailController.memes = self.memeImage[indexPath.row]
         if !isEditing {
             detailController.dataController = dataController
-            //detailController.memeImage = UIImage(data: memeImage[indexPath.row].editedImg!)
-            detailController.memeImage = memeImage[indexPath.row]
+            detailController.memeImage = image(for: indexPath)
             navigationController?.pushViewController(detailController, animated: true)
         }
         
-        let cell = collectionView.cellForItem(at: indexPath) as? MemeCollectionViewCell
-        
-        //cell?.isEditing = isEditing
-        
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath)
-//        print(indexPath)
-    }
 
     
     func loadImage(){
         let fetchRequest: NSFetchRequest<Image> = Image.fetchRequest()
         
-        //let fetchTextRequest: NSFetchRequest<Text> = Text.fetchRequest()
-        //let predicate: NSPredicate = NSPredicate(format: "image == %@", image)
-        //fetchTextRequest.predicate = predicate
-        
         do{
             memeImage = try dataController.viewContext.fetch(fetchRequest)
-            //let fetchedText = try dataController.viewContext.fetch(fetchTextRequest)
-            
-            //imageView.image = UIImage(data: fetchedImage[fetchedImage.endIndex - 1].img!)
-            
-            
-           
         }catch {
             print("Error while fetching the image")
         }
+    }
+}
+
+extension SentMemeCollectionViewController {
+    func image(for indexPath: IndexPath) -> Image {
+        return memeImage[indexPath.row]
     }
 }

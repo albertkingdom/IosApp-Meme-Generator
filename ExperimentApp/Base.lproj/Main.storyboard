@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h3A-FI-8Wq">
-    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <device id="retina6_0" orientation="landscape" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -14,11 +14,11 @@
             <objects>
                 <viewController storyboardIdentifier="CreateMemeController" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="ExperimentApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0kV-ff-hf8">
-                                <rect key="frame" x="0.0" y="44" width="390" height="50"/>
+                                <rect key="frame" x="44" y="0.0" width="756" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Rah-o8-7SS"/>
                                 </constraints>
@@ -38,7 +38,7 @@
                                 </items>
                             </navigationBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1bx-fN-MYn">
-                                <rect key="frame" x="0.0" y="760" width="390" height="50"/>
+                                <rect key="frame" x="44" y="319" width="756" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ktq-Yx-17W"/>
                                 </constraints>
@@ -68,16 +68,15 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0l-E3-Hha" userLabel="container">
-                                <rect key="frame" x="0.0" y="94" width="390" height="666"/>
+                                <rect key="frame" x="44" y="50" width="756" height="269"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K43-7Z-zep">
-                                        <rect key="frame" x="0.0" y="0.0" width="390" height="666"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="756" height="269"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="K43-7Z-zep" firstAttribute="leading" secondItem="h0l-E3-Hha" secondAttribute="leading" id="P9x-ay-l7m"/>
-                                    <constraint firstAttribute="height" constant="666" id="d04-UT-dEF"/>
                                     <constraint firstAttribute="trailing" secondItem="K43-7Z-zep" secondAttribute="trailing" id="eSJ-YU-SLI"/>
                                     <constraint firstItem="K43-7Z-zep" firstAttribute="top" secondItem="h0l-E3-Hha" secondAttribute="top" id="iZn-KH-4sC"/>
                                     <constraint firstAttribute="bottom" secondItem="K43-7Z-zep" secondAttribute="bottom" id="qPQ-eN-UmV"/>
@@ -135,7 +134,7 @@
                 <navigationController title="wow" id="nN0-xr-0bd" userLabel="collection view" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Collection" image="square.grid.3x2" catalog="system" selectedImage="square.grid.3x2" id="eRv-WY-yWs" userLabel="collection"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4HB-e1-06T">
-                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="844" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -151,10 +150,10 @@
             <objects>
                 <collectionViewController storyboardIdentifier="collectionViewController" id="7RU-cR-3mD" userLabel="Sent Meme Collection View" customClass="SentMemeCollectionViewController" customModule="ExperimentApp" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="0OB-Gi-9b9">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YrR-aA-ZGT">
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="safeArea" id="YrR-aA-ZGT">
                             <size key="itemSize" width="150" height="300"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -162,7 +161,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MemeCollectionViewCell" id="KAI-p7-hh3" customClass="MemeCollectionViewCell" customModule="ExperimentApp" customModuleProvider="target">
-                                <rect key="frame" x="10" y="0.0" width="150" height="300"/>
+                                <rect key="frame" x="54" y="0.0" width="150" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FBF-dK-iko">
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="300"/>
@@ -214,7 +213,7 @@
                 <navigationController id="1g1-s4-gcK" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Table" image="list.bullet" catalog="system" selectedImage="list.bullet" id="h2R-ak-E0n"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Imd-N5-Q2Z">
-                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="844" height="32"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -230,15 +229,15 @@
             <objects>
                 <tableViewController id="toc-vN-wNT" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jQR-fw-W6d">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="acw-LL-mPI">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="43.666667938232422"/>
+                                <rect key="frame" x="0.0" y="24.333333969116211" width="844" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="acw-LL-mPI" id="nRL-Al-Efl">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                    <rect key="frame" x="44" y="0.0" width="756" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -259,11 +258,11 @@
             <objects>
                 <viewController storyboardIdentifier="DetailView" title="Detail View Controller" id="vSZ-Vf-Pmy" customClass="DetailViewController" customModule="ExperimentApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IhZ-HB-9jY">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="844" height="390"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PA5-4O-cOv">
-                                <rect key="frame" x="0.0" y="44" width="390" height="766"/>
+                                <rect key="frame" x="44" y="0.0" width="756" height="369"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8cc-5W-c9c"/>

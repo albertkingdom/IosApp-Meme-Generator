@@ -20,8 +20,7 @@ class MemeCollectionViewCell: UICollectionViewCell {
         }
     }
    
-//    @IBOutlet weak var memeTopText: UILabel!
-//    @IBOutlet weak var memeBottomText: UILabel!
+
     @IBOutlet weak var memeImageView: UIImageView!
    
     @IBOutlet weak var checkIcon: UIImageView!

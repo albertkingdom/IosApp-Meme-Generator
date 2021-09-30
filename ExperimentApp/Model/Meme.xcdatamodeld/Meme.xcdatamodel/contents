@@ -3,14 +3,14 @@
     <entity name="Image" representedClassName="Image" syncable="YES" codeGenerationType="class">
         <attribute name="editedImg" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="img" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
-        <relationship name="text" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageText" inverseName="image" inverseEntity="ImageText"/>
+        <relationship name="text" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ImageText" inverseName="image" inverseEntity="ImageText"/>
     </entity>
     <entity name="ImageText" representedClassName="ImageText" syncable="YES" codeGenerationType="class">
         <attribute name="attributedText" optional="YES" attributeType="Transformable" customClassName="NSAttributedString"/>
         <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="text" inverseEntity="Image"/>
     </entity>
     <elements>
-        <element name="Image" positionX="-27" positionY="18" width="128" height="74"/>
-        <element name="ImageText" positionX="18" positionY="81" width="128" height="59"/>
+        <element name="Image" positionX="-229.63671875" positionY="-26.1484375" width="128" height="88"/>
+        <element name="ImageText" positionX="484.6875" positionY="-56.6171875" width="128" height="73"/>
     </elements>
 </model>
