@@ -1,0 +1,39 @@
+
+/* Class = "UIBarButtonItem"; title = "Pick Image"; ObjectID = "GBm-d5-Avb"; */
+"GBm-d5-Avb.title" = "Pick Image";
+
+/* Class = "UINavigationItem"; title = "Editor"; ObjectID = "IDD-Jr-E4d"; */
+"IDD-Jr-E4d.title" = "Editor";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dTQ-FQ-nCa"; */
+"dTQ-FQ-nCa.title" = "Cancel";
+
+/* Class = "UITabBarItem"; title = "Collection"; ObjectID = "eRv-WY-yWs"; */
+"eRv-WY-yWs.title" = "Collection";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "fJU-ij-5EN"; */
+"fJU-ij-5EN.title" = "Save";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "fxH-X2-Wdz"; */
+"fxH-X2-Wdz.title" = "Item";
+
+/* Class = "UITabBarItem"; title = "Table"; ObjectID = "h2R-ak-E0n"; */
+"h2R-ak-E0n.title" = "Table";
+
+/* Class = "UINavigationItem"; title = "Sent Meme"; ObjectID = "l1r-JV-xWl"; */
+"l1r-JV-xWl.title" = "Sent Meme";
+
+/* Class = "UIBarButtonItem"; title = "Add Text"; ObjectID = "maT-4t-dCh"; */
+"maT-4t-dCh.title" = "Add Text";
+
+/* Class = "UINavigationController"; title = "wow"; ObjectID = "nN0-xr-0bd"; */
+"nN0-xr-0bd.title" = "wow";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "ozA-4A-TJU"; */
+"ozA-4A-TJU.title" = "Item";
+
+/* Class = "UINavigationItem"; title = "Sent Meme"; ObjectID = "uR4-S8-XBx"; */
+"uR4-S8-XBx.title" = "Sent Meme";
+
+/* Class = "UIViewController"; title = "Detail View Controller"; ObjectID = "vSZ-Vf-Pmy"; */
+"vSZ-Vf-Pmy.title" = "Detail View Controller";

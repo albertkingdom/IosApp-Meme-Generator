@@ -19,13 +19,17 @@ class ViewController: UIViewController {
    
     var dataController: DataController!
     var imageToBeEdit: Image!
-    var fetchedImageText: [ImageText]!
+    var fetchedImageText: [ImageText] = []
     private var initialCenter: CGPoint = .zero
     var activeTextField: UITextField?  // to know which is active textfield
+    var imageRotateDegree: CGFloat = 0
     @IBOutlet weak var imageContainer: UIView!
     @IBOutlet weak var imagePickerView: UIImageView!
 
     
+    @IBAction func rotateImage(_ sender: Any) {
+        self.rotate90degree()
+    }
     @IBAction func cancelEditor(_ sender: Any) {
         let alertController = UIAlertController(title: "Exit", message: "Do you want to exit editor?", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Stay Here!", style: .default, handler: nil))
@@ -47,8 +51,9 @@ class ViewController: UIViewController {
        
         if (imageToBeEdit != nil) {
             saveFileAlertController.addAction(UIAlertAction(title: "Override current copy", style: .default, handler: { _ in
-                NSLog("Override current copy")
-                self.overrideImageToDatabase()
+                
+                //self.overrideImageToDatabase()
+                self.saveImageToDatabase(override: true)
                 self.navigateToSentMeme()
             }))
             
@@ -64,7 +69,7 @@ class ViewController: UIViewController {
         
         activity.completionWithItemsHandler = {(activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
             if completed {
-                self.navigateToSentMeme()
+                //self.navigateToSentMeme()
                 //TODO: add complete alert
             }
         }
@@ -79,48 +84,7 @@ class ViewController: UIViewController {
       
         navigationController?.popToRootViewController(animated: true)
     }
-    
-    
-    
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: true)
-      
-        if imageToBeEdit != nil {
-            imagePickerView.image = UIImage(data:imageToBeEdit.img!)
-            let fetchRequest: NSFetchRequest<ImageText> = ImageText.fetchRequest()
-            
-            let predicate: NSPredicate = NSPredicate(format: "image == %@", imageToBeEdit)
-            
-            fetchRequest.predicate = predicate
-            
-            do{
-                fetchedImageText = try dataController.viewContext.fetch(fetchRequest)
-               
-                for text in fetchedImageText {
-                    
-                    self.textFieldConfiguration(customAttribute: text.attributedText, applyDefault: false)
-                }
-            } catch {
-                print("cant not fetch \(error.localizedDescription)")
-            }
-        }
-        
-        
-    }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        subscribeToKeyboardNotifications()
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        unsubscribeFromKeyboardNotifications()
-        navigationController?.setNavigationBarHidden(false, animated: false)
-    }
+
     @IBAction func pickImage(_ sender: Any) {
  
         let imagePicker = UIImagePickerController()
@@ -148,7 +112,49 @@ class ViewController: UIViewController {
         controller.delegate = self
         present(controller, animated: true, completion: nil)
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+      
+        if imageToBeEdit != nil {
+            
+            if let imagedata = imageToBeEdit.img {
+                let img = UIImage(data:imagedata)!
+                imagePickerView.image = fixOrientation(img: img)
+            }
+           
+            let fetchRequest: NSFetchRequest<ImageText> = ImageText.fetchRequest()
+            
+            let predicate: NSPredicate = NSPredicate(format: "image == %@", imageToBeEdit)
+            
+            fetchRequest.predicate = predicate
+            
+            do{
+                fetchedImageText = try dataController.viewContext.fetch(fetchRequest)
+                print("view did load \(fetchedImageText.count)")
+                for text in fetchedImageText {
+                    
+                    self.textFieldConfiguration(customAttribute: text.attributedText, applyDefault: false)
+                }
+            } catch {
+                print("cant not fetch \(error.localizedDescription)")
+            }
+        }
+        
+        
+    }
     
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        subscribeToKeyboardNotifications()
+        imageRotateDegree = 0
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        unsubscribeFromKeyboardNotifications()
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
     func textFieldConfiguration(customAttribute: NSAttributedString?, applyDefault: Bool){
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(userDragged))
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
@@ -164,6 +170,7 @@ class ViewController: UIViewController {
         panGesture.delegate = self
         if applyDefault {
             newTextField.defaultTextAttributes = memeTextAttributes
+            newTextField.becomeFirstResponder()
         } else {
             newTextField.attributedText = customAttribute
         }
@@ -228,23 +235,7 @@ extension ViewController: UIGestureRecognizerDelegate{
         sender.view?.becomeFirstResponder()
         activeTextField = sender.view as? UITextField
     }
-    // TODO: auto resize textfield
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if textField.text != nil {
-//                    let text = textField.text! as NSString
-//                    let finalString = text.replacingCharacters(in: range, with: string)
-//                    textField.frame.size.width = getWidth(text: finalString)
-//                }
-//
-//                return true
-//    }
-//    func getWidth(text: String) -> CGFloat {
-//        let txtField = UITextField(frame: .zero)
-//        txtField.text = text
-//        txtField.sizeToFit()
-//        return txtField.frame.size.width
-//    }
+
     
 }
 extension ViewController: UIColorPickerViewControllerDelegate {
@@ -271,55 +262,60 @@ extension ViewController {
         let originalImageToSave = imagePickerView.image?.pngData()
         let editedImageToSave = self.generateMemedImage().pngData()
         
-
-        let image = Image(context: dataController.viewContext)
+        
+        //let image = Image(context: dataController.viewContext)
+        if !override {
+            let image = Image(context: dataController.viewContext)
             image.img = originalImageToSave
             image.editedImg = editedImageToSave
-        
-        
-        do {
-            try dataController.viewContext.save()
             saveTextField(image: image)
+        }
+        
+        if override {
+            imageToBeEdit.img = originalImageToSave
+            imageToBeEdit.editedImg = editedImageToSave
+            saveTextField(image: imageToBeEdit)
+        }
+        do {
+            print("pending \(dataController.viewContext.insertedObjects)")
+            try dataController.viewContext.save()
+            
         } catch {
             print("Could not save. \(error), \(error.localizedDescription)")
         }
     }
-    func overrideImageToDatabase(){
-        let originalImageToSave = imagePickerView.image?.pngData()
-        let editedImageToSave = self.generateMemedImage().pngData()
+    
+    func saveTextField(image:Image) {
         
-        imageToBeEdit.img = originalImageToSave
-        imageToBeEdit.editedImg = editedImageToSave
+        var textfields:[UITextField] = []
+        let existedTextCount = fetchedImageText.count
+        for subview in imageContainer.subviews{
+            if let uitext = subview as? UITextField  {
+                textfields.append(uitext)
+            }
+        }
         
-       
+        for index in textfields.indices {
+            if index < existedTextCount  {
+                // override existed ImageText object
+                fetchedImageText[index].attributedText = textfields[index].attributedText
+                fetchedImageText[index].image = image
+            } else {
+                // create new ImageText object for new uitextfield
+                let textToSave = NSEntityDescription.insertNewObject(forEntityName: "ImageText", into: dataController.viewContext) as! ImageText
+                textToSave.attributedText = textfields[index].attributedText
+                textToSave.image = image
+            }
+        }
         do {
+            print("save text pending \(dataController.viewContext.insertedObjects)")
             try dataController.viewContext.save()
-            saveTextField(image: imageToBeEdit)
+            
            
         } catch {
             print("Could not save. \(error), \(error.localizedDescription)")
         }
-        
-    }
-    func saveTextField(image:Image) {
-        let image = image
        
-        for subview in imageContainer.subviews{
-
-
-            if let uitext = subview as? UITextField  {
-                let textToSave = NSEntityDescription.insertNewObject(forEntityName: "ImageText", into: dataController.viewContext) as! ImageText
-                textToSave.attributedText = uitext.attributedText
-                textToSave.image = image
-
-            }
-
-        }
-        do {
-            try dataController.viewContext.save()
-        } catch {
-            print("Could not save. \(error), \(error.localizedDescription)")
-        }
     }
 }
 
@@ -356,5 +352,24 @@ extension ViewController {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.cgRectValue.height
+    }
+}
+
+extension ViewController {
+    func fixOrientation(img: UIImage) -> UIImage {
+        print("image orientation: \(img.imageOrientation.rawValue)")
+        if (img.imageOrientation == UIImage.Orientation.up) {
+          return img;
+        }
+        guard let landscapeCGImage = img.cgImage else { return img}
+        
+        let portraitImage = UIImage(cgImage: landscapeCGImage, scale: img.scale, orientation: .right)
+        return portraitImage
+    }
+    
+    func rotate90degree() {
+        let counterClockwise90degree = CGFloat.pi / 180 * 90
+        imageRotateDegree += counterClockwise90degree
+        imagePickerView.transform = CGAffineTransform.identity.rotated(by: imageRotateDegree)
     }
 }

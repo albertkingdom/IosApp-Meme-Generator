@@ -15,8 +15,15 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var memeImageView: UIImageView!
    
+    @IBAction func shareImage(_ sender: Any) {
+        guard let imageToShare = UIImage(data: memeImage.editedImg!) else { return }
+        
+        let activity = UIActivityViewController(activityItems: [imageToShare], applicationActivities: nil)
+        
+        present(activity, animated: true, completion: nil)
+    }
     
-    //var memes:Meme!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -51,15 +51,20 @@ class SentMemeCollectionViewController: UICollectionViewController{
     
     @objc func deleteItem() {
         let selectItems = collectionView.indexPathsForSelectedItems!
- 
+        print("s")
         for item in selectItems {
 
             dataController.viewContext.delete(image(for: item))
-            memeImage.remove(at: item.row)
+            
         }
         do {
             try dataController.viewContext.save()
+
+            let indexToDelete = selectItems.map {
+               $0.row
+            }
             
+            memeImage = memeImage.enumerated().filter{ !indexToDelete.contains($0.offset) }.map{$0.element}
             collectionView.deleteItems(at: selectItems)
             
             self.setEditing(false, animated: true)
