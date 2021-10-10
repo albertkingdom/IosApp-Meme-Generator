@@ -11,8 +11,7 @@ import CoreData
 class DetailViewController: UIViewController {
 
     var memeImage: Image!
-    var dataController: DataController!
-    
+    var context: NSManagedObjectContext!
     @IBOutlet weak var memeImageView: UIImageView!
    
     @IBAction func shareImage(_ sender: Any) {
@@ -42,8 +41,8 @@ class DetailViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     @objc func navigateToMemeEditor() {
-        let controller = storyboard?.instantiateViewController(identifier: "CreateMemeController") as! ViewController
-        controller.dataController = dataController
+        let controller = storyboard?.instantiateViewController(identifier: "CreateMemeController") as! EditorViewController
+        controller.context = context
         controller.imageToBeEdit = memeImage
         
         navigationController?.pushViewController(controller, animated: true)

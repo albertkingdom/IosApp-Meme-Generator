@@ -15,9 +15,9 @@ let memeTextAttributes: [NSAttributedString.Key: Any] = [
     NSAttributedString.Key.strokeWidth: -0.5
 ]
 
-class ViewController: UIViewController {
+class EditorViewController: UIViewController {
    
-    var dataController: DataController!
+    var context: NSManagedObjectContext!
     var imageToBeEdit: Image!
     var fetchedImageText: [ImageText] = []
     private var initialCenter: CGPoint = .zero
@@ -107,6 +107,7 @@ class ViewController: UIViewController {
     }
     
     
+    @available(iOS 14.0, *)
     @IBAction func pickColor(){
         let controller = UIColorPickerViewController()
         controller.delegate = self
@@ -130,7 +131,7 @@ class ViewController: UIViewController {
             fetchRequest.predicate = predicate
             
             do{
-                fetchedImageText = try dataController.viewContext.fetch(fetchRequest)
+                fetchedImageText = try context.fetch(fetchRequest)
                 print("view did load \(fetchedImageText.count)")
                 for text in fetchedImageText {
                     
@@ -178,7 +179,7 @@ class ViewController: UIViewController {
     }
    
 }
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditorViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // implement methods in UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
@@ -190,7 +191,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         dismiss(animated: true, completion: nil)
     }
 }
-extension ViewController: UITextFieldDelegate {
+extension EditorViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         //activeTextField = textField
         textField.becomeFirstResponder()
@@ -205,7 +206,7 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
-extension ViewController: UIGestureRecognizerDelegate{
+extension EditorViewController: UIGestureRecognizerDelegate{
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 
         return true
@@ -238,14 +239,15 @@ extension ViewController: UIGestureRecognizerDelegate{
 
     
 }
-extension ViewController: UIColorPickerViewControllerDelegate {
+extension EditorViewController: UIColorPickerViewControllerDelegate {
+    @available(iOS 14.0, *)
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         activeTextField?.textColor = viewController.selectedColor
         //dismiss(animated: true, completion: nil)
     }
 }
 // MARK: output image, save to database
-extension ViewController {
+extension EditorViewController {
     
     func generateMemedImage() -> UIImage {
 
@@ -265,7 +267,7 @@ extension ViewController {
         
         //let image = Image(context: dataController.viewContext)
         if !override {
-            let image = Image(context: dataController.viewContext)
+            let image = Image(context: context)
             image.img = originalImageToSave
             image.editedImg = editedImageToSave
             saveTextField(image: image)
@@ -277,8 +279,8 @@ extension ViewController {
             saveTextField(image: imageToBeEdit)
         }
         do {
-            print("pending \(dataController.viewContext.insertedObjects)")
-            try dataController.viewContext.save()
+           
+            try context.save()
             
         } catch {
             print("Could not save. \(error), \(error.localizedDescription)")
@@ -302,14 +304,14 @@ extension ViewController {
                 fetchedImageText[index].image = image
             } else {
                 // create new ImageText object for new uitextfield
-                let textToSave = NSEntityDescription.insertNewObject(forEntityName: "ImageText", into: dataController.viewContext) as! ImageText
+                let textToSave = NSEntityDescription.insertNewObject(forEntityName: "ImageText", into: context) as! ImageText
                 textToSave.attributedText = textfields[index].attributedText
                 textToSave.image = image
             }
         }
         do {
-            print("save text pending \(dataController.viewContext.insertedObjects)")
-            try dataController.viewContext.save()
+            //print("save text pending \(context.insertedObjects)")
+            try context.save()
             
            
         } catch {
@@ -321,7 +323,7 @@ extension ViewController {
 
 
 // MARK: keyboard
-extension ViewController {
+extension EditorViewController {
     func subscribeToKeyboardNotifications() {
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -355,7 +357,7 @@ extension ViewController {
     }
 }
 
-extension ViewController {
+extension EditorViewController {
     func fixOrientation(img: UIImage) -> UIImage {
         print("image orientation: \(img.imageOrientation.rawValue)")
         if (img.imageOrientation == UIImage.Orientation.up) {
