@@ -23,11 +23,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let tabbarcontroller = window?.rootViewController as! UITabBarController
         
-        let navigationController = tabbarcontroller.customizableViewControllers?[0] as! UINavigationController
+        let navigationControllerOne = tabbarcontroller.customizableViewControllers?[0] as! UINavigationController
+        let navigationControllerTwo = tabbarcontroller.customizableViewControllers?[1] as! UINavigationController
+        let firstController = navigationControllerOne.topViewController as! SentMemeCollectionViewController
+        let secondController = navigationControllerTwo.topViewController as! SentMemeTableViewController
         
-        let firstController = navigationController.topViewController as! SentMemeCollectionViewController
         firstController.context = appDelegate.persistentContainer.viewContext
-       
+        secondController.context = appDelegate.persistentContainer.viewContext
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

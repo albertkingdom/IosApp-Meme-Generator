@@ -132,7 +132,7 @@ class EditorViewController: UIViewController {
             
             do{
                 fetchedImageText = try context.fetch(fetchRequest)
-                print("view did load \(fetchedImageText.count)")
+                //print("view did load \(fetchedImageText.count)")
                 for text in fetchedImageText {
                     
                     self.textFieldConfiguration(customAttribute: text.attributedText, applyDefault: false)
@@ -270,12 +270,14 @@ extension EditorViewController {
             let image = Image(context: context)
             image.img = originalImageToSave
             image.editedImg = editedImageToSave
+            image.createDate = Date()
             saveTextField(image: image)
         }
         
         if override {
             imageToBeEdit.img = originalImageToSave
             imageToBeEdit.editedImg = editedImageToSave
+            imageToBeEdit.createDate = Date()
             saveTextField(image: imageToBeEdit)
         }
         do {
