@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		A1C5206B272A6A630025436A /* SentMemeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C5206A272A6A630025436A /* SentMemeTableViewController.swift */; };
 		A1C5206D272A94180025436A /* MemeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C5206C272A94180025436A /* MemeTableViewCell.swift */; };
+		A1C52070272FB5500025436A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A1C5206F272FB5500025436A /* Alamofire */; };
+		A1C52072272FB64C0025436A /* ShareImageOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C52071272FB64C0025436A /* ShareImageOnline.swift */; };
 		DF05F83626F73F5900C43B0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05F83526F73F5900C43B0D /* AppDelegate.swift */; };
 		DF05F83826F73F5900C43B0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05F83726F73F5900C43B0D /* SceneDelegate.swift */; };
 		DF05F83A26F73F5900C43B0D /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05F83926F73F5900C43B0D /* EditorViewController.swift */; };
@@ -24,6 +26,7 @@
 /* Begin PBXFileReference section */
 		A1C5206A272A6A630025436A /* SentMemeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentMemeTableViewController.swift; sourceTree = "<group>"; };
 		A1C5206C272A94180025436A /* MemeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeTableViewCell.swift; sourceTree = "<group>"; };
+		A1C52071272FB64C0025436A /* ShareImageOnline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageOnline.swift; sourceTree = "<group>"; };
 		DF05F83226F73F5900C43B0D /* Meme Generator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meme Generator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF05F83526F73F5900C43B0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF05F83726F73F5900C43B0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1C52070272FB5500025436A /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				DF30E14D27016E50009C8020 /* Meme.xcdatamodeld */,
+				A1C52071272FB64C0025436A /* ShareImageOnline.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -127,6 +132,9 @@
 			dependencies = (
 			);
 			name = "Meme Generator";
+			packageProductDependencies = (
+				A1C5206F272FB5500025436A /* Alamofire */,
+			);
 			productName = ExperimentApp;
 			productReference = DF05F83226F73F5900C43B0D /* Meme Generator.app */;
 			productType = "com.apple.product-type.application";
@@ -155,6 +163,9 @@
 				"zh-Hant",
 			);
 			mainGroup = DF05F82926F73F5900C43B0D;
+			packageReferences = (
+				A1C5206E272FB5500025436A /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = DF05F83326F73F5900C43B0D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -190,6 +201,7 @@
 				DF30E14F27016E50009C8020 /* Meme.xcdatamodeld in Sources */,
 				A1C5206D272A94180025436A /* MemeTableViewCell.swift in Sources */,
 				DF05F83626F73F5900C43B0D /* AppDelegate.swift in Sources */,
+				A1C52072272FB64C0025436A /* ShareImageOnline.swift in Sources */,
 				DF05F83826F73F5900C43B0D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,6 +410,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1C5206E272FB5500025436A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1C5206F272FB5500025436A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1C5206E272FB5500025436A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		DF30E14D27016E50009C8020 /* Meme.xcdatamodeld */ = {

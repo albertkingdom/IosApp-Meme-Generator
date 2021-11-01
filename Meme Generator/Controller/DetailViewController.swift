@@ -18,8 +18,35 @@ class DetailViewController: UIViewController {
         guard let imageToShare = UIImage(data: memeImage.editedImg!) else { return }
         
         let activity = UIActivityViewController(activityItems: [imageToShare], applicationActivities: nil)
+        let alertController = UIAlertController(title: "Share", message: "", preferredStyle: .actionSheet)
+        let uploadAction = UIAlertAction(title: "透過imgur分享", style: .default) { _ in
+           
+            uploadImage(data: self.memeImage.editedImg!){ [weak self] (link:String?, error:Error?) in
+                if let link = link {
+                    let resultAlertController = UIAlertController(title: "Imgur分享結果", message: link, preferredStyle: .alert)
+                    let copyAction = UIAlertAction(title: "複製連結", style: .default){ _ in
+                        UIPasteboard.general.string = link
+                    }
+                    resultAlertController.addAction(copyAction)
+                    self?.present(resultAlertController, animated: true, completion: nil)
+                    
+                } else {
+                    let resultAlertController = UIAlertController(title: "Imgur分享結果", message: "無法成功上傳！", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    resultAlertController.addAction(okAction)
+                    self?.present(resultAlertController, animated: true, completion: nil)
+                }
+                
+            }
+        }
+        let shareWithOtherAppAction = UIAlertAction(title: "分享", style: .default) { _ in
+            self.present(activity, animated: true, completion: nil)
+        }
+        alertController.addAction(uploadAction)
+        alertController.addAction(shareWithOtherAppAction)
+        //present(activity, animated: true, completion: nil)
         
-        present(activity, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
 
